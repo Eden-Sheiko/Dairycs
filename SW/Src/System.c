@@ -150,6 +150,6 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {
         }
 
         HAL_UARTEx_ReceiveToIdle_DMA(huart, rx_buffer, RX_BUFF_SIZE);
-        /* Consider adding: memset(rx_buffer, 0, RX_BUFF_SIZE); */
+
     }
 }
