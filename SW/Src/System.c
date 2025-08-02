@@ -10,9 +10,12 @@ volatile uint8_t user_btn_flag = 0x00U;
 volatile uint8_t timer_logger_flag = 0x00U;
 volatile system_states_t system_state = SYS_STATE_IDLE;
 
-
 uint16_t adc_buf = 0x00U;
 
+module_config_t config = {
+    .start_msg = {'s','t','a','r','t'},
+    .stop_msg = {'s','t','o','p'}
+};
 
 void main_system_loop(void) {
 
@@ -67,9 +70,6 @@ system_module_error_t adc_stop_mesure(void) {
 }
 
 
-
-
-
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 	if (htim == &htim10) {
 		timer_logger_flag = 0x01U;
@@ -95,14 +95,14 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {
 
 	if (huart == &huart2) {
-		if (strncmp((const char *)rx_buffer, "start", 5) == 0) {
+		if (strncmp((const char *)rx_buffer, (const char *)config.start_msg, START_MSG_SIZE) == 0) {
 			if (adc_start_mesure() != SYSTEM_OK) {
 				system_state = SYS_STATE_ERROR;
 			} else {
 				system_state = SYS_STATE_RUNNING;
 			}
 
-		} else if (strncmp((const char *)rx_buffer, "stop", 4) == 0) {
+		} else if (strncmp((const char *)rx_buffer, (const char *)config.stop_msg, STOP_MSG_SIZE) == 0) {
 			if (adc_stop_mesure() != SYSTEM_OK) {
 				system_state = SYS_STATE_ERROR;
 			} else {
@@ -114,6 +114,7 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {
 		}
 
 		HAL_UARTEx_ReceiveToIdle_DMA(huart, rx_buffer, RX_BUFF_SIZE);
+		/* add memset ?*/
 	}
 
 }

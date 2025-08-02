@@ -118,12 +118,7 @@ int main(void)
   MX_ADC1_Init();
   MX_TIM11_Init();
   /* USER CODE BEGIN 2 */
-//  if (HAL_TIM_Base_Start_IT(&htim10) != HAL_OK){
-//	  Error_Handler();
-//  }
-//  if (HAL_TIM_Base_Start_IT(&htim11) != HAL_OK){
-//	  Error_Handler();
-//  }
+
   if (HAL_UARTEx_ReceiveToIdle_DMA(&huart2, rx_buffer, RX_BUFF_SIZE) != HAL_OK){
 	  Error_Handler();
   }

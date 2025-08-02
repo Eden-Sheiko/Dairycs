@@ -15,6 +15,8 @@
 #include "main.h"
 
 #define ADC_SIZE 1
+#define START_MSG_SIZE 5
+#define STOP_MSG_SIZE 4
 
 extern TIM_HandleTypeDef htim10;
 extern ADC_HandleTypeDef hadc1;
@@ -35,9 +37,9 @@ typedef enum {
     SYS_STATE_ERROR
 } system_states_t;
 
-/* for the future */
 typedef struct module_config_s {
-	uint8_t config;
+    uint8_t start_msg[START_MSG_SIZE];
+    uint8_t stop_msg[STOP_MSG_SIZE];
 } module_config_t;
 
 
