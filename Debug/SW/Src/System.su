@@ -1,7 +1,6 @@
-../SW/Src/System.c:16:6:main_system_loop	8	static
-../SW/Src/System.c:53:23:adc_start_mesure	8	static
-../SW/Src/System.c:66:23:adc_stop_mesure	8	static
-../SW/Src/System.c:83:6:HAL_TIM_PeriodElapsedCallback	16	static
-../SW/Src/System.c:92:6:HAL_GPIO_EXTI_Callback	16	static
-../SW/Src/System.c:107:6:HAL_UARTEx_RxEventCallback	16	static
-../SW/Src/System.c:131:6:HAL_ADC_ConvCpltCallback	16	static
+../SW/Src/System.c:17:6:main_system_loop	8	static
+../SW/Src/System.c:43:23:adc_start_mesure	8	static
+../SW/Src/System.c:56:23:adc_stop_mesure	8	static
+../SW/Src/System.c:73:6:HAL_TIM_PeriodElapsedCallback	16	static
+../SW/Src/System.c:82:6:HAL_GPIO_EXTI_Callback	16	static
+../SW/Src/System.c:95:6:HAL_UARTEx_RxEventCallback	16	static

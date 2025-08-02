@@ -70,6 +70,9 @@ static void MX_ADC1_Init(void);
 static void MX_TIM11_Init(void);
 /* USER CODE BEGIN PFP */
 
+void main_system_loop(void);
+
+
 uint8_t rx_buffer[RX_BUFF_SIZE] = { 0 };
 
 

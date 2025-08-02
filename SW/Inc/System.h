@@ -9,19 +9,18 @@
 #define INC_SYSTEM_H_
 
 #include <stdint.h>
+#include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
 #include "main.h"
+
+#define ADC_SIZE 1
 
 extern TIM_HandleTypeDef htim10;
 extern ADC_HandleTypeDef hadc1;
 extern TIM_HandleTypeDef htim11;
 extern UART_HandleTypeDef huart2;
 extern uint8_t rx_buffer[RX_BUFF_SIZE];
-
-
-
-
 
 typedef enum {
 	SYSTEM_OK = 0,
