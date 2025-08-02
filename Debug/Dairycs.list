@@ -27,9 +27,9 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  11 .ARM.attributes 00000030  00000000  00000000  00007074  2**0
                   CONTENTS, READONLY
- 12 .debug_info   0001054f  00000000  00000000  000070a4  2**0
+ 12 .debug_info   0001054a  00000000  00000000  000070a4  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 13 .debug_abbrev 000025a3  00000000  00000000  000175f3  2**0
+ 13 .debug_abbrev 000025a4  00000000  00000000  000175ee  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  14 .debug_aranges 00000ef8  00000000  00000000  00019b98  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
@@ -37,11 +37,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  16 .debug_macro  00018bb2  00000000  00000000  0001b63a  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   00011429  00000000  00000000  000341ec  2**0
+ 17 .debug_line   0001142c  00000000  00000000  000341ec  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    0009b839  00000000  00000000  00045615  2**0
+ 18 .debug_str    0009b839  00000000  00000000  00045618  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000043  00000000  00000000  000e0e4e  2**0
+ 19 .comment      00000043  00000000  00000000  000e0e51  2**0
                   CONTENTS, READONLY
  20 .debug_frame  00004660  00000000  00000000  000e0e94  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
@@ -12914,57 +12914,57 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  8004c18:	51eb851f 	.word	0x51eb851f
 
 08004c1c <main_system_loop>:
-module_config_t config = {
-    .start_msg = {'s','t','a','r','t'},
-    .stop_msg = {'s','t','o','p'}
-};
+/* ------------------------------------------------------------------------- */
 
+/**
+ * @brief Main application loop
+ */
 void main_system_loop(void) {
  8004c1c:	b580      	push	{r7, lr}
  8004c1e:	af00      	add	r7, sp, #0
-	if (user_btn_flag) {
+    if (user_btn_flag) {
  8004c20:	4b25      	ldr	r3, [pc, #148]	@ (8004cb8 <main_system_loop+0x9c>)
  8004c22:	781b      	ldrb	r3, [r3, #0]
  8004c24:	b2db      	uxtb	r3, r3
  8004c26:	2b00      	cmp	r3, #0
  8004c28:	d019      	beq.n	8004c5e <main_system_loop+0x42>
-		HAL_Delay(DEBOUNCE_TIME);
+        HAL_Delay(DEBOUNCE_TIME);
  8004c2a:	2014      	movs	r0, #20
  8004c2c:	f7fc fa14 	bl	8001058 <HAL_Delay>
-		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+        HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
  8004c30:	2120      	movs	r1, #32
  8004c32:	4822      	ldr	r0, [pc, #136]	@ (8004cbc <main_system_loop+0xa0>)
  8004c34:	f7fd fe59 	bl	80028ea <HAL_GPIO_TogglePin>
-		if (system_state == SYS_STATE_RUNNING) {
+
+        if (system_state == SYS_STATE_RUNNING) {
  8004c38:	4b21      	ldr	r3, [pc, #132]	@ (8004cc0 <main_system_loop+0xa4>)
  8004c3a:	781b      	ldrb	r3, [r3, #0]
  8004c3c:	b2db      	uxtb	r3, r3
  8004c3e:	2b01      	cmp	r3, #1
  8004c40:	d105      	bne.n	8004c4e <main_system_loop+0x32>
-			adc_stop_mesure();
+            adc_stop_mesure();
  8004c42:	f000 f871 	bl	8004d28 <adc_stop_mesure>
-			system_state = SYS_STATE_IDLE;
+            system_state = SYS_STATE_IDLE;
  8004c46:	4b1e      	ldr	r3, [pc, #120]	@ (8004cc0 <main_system_loop+0xa4>)
  8004c48:	2200      	movs	r2, #0
  8004c4a:	701a      	strb	r2, [r3, #0]
  8004c4c:	e004      	b.n	8004c58 <main_system_loop+0x3c>
-		} else {
-			adc_start_mesure();
+        } else {
+            adc_start_mesure();
  8004c4e:	f000 f843 	bl	8004cd8 <adc_start_mesure>
-			system_state = SYS_STATE_RUNNING;
+            system_state = SYS_STATE_RUNNING;
  8004c52:	4b1b      	ldr	r3, [pc, #108]	@ (8004cc0 <main_system_loop+0xa4>)
  8004c54:	2201      	movs	r2, #1
  8004c56:	701a      	strb	r2, [r3, #0]
-		}
+        }
 
-		user_btn_flag = 0x00U;
+        user_btn_flag = 0x00U;
  8004c58:	4b17      	ldr	r3, [pc, #92]	@ (8004cb8 <main_system_loop+0x9c>)
  8004c5a:	2200      	movs	r2, #0
  8004c5c:	701a      	strb	r2, [r3, #0]
-	}
+    }
 
-
-	switch (system_state) {
+    switch (system_state) {
  8004c5e:	4b18      	ldr	r3, [pc, #96]	@ (8004cc0 <main_system_loop+0xa4>)
  8004c60:	781b      	ldrb	r3, [r3, #0]
  8004c62:	b2db      	uxtb	r3, r3
@@ -12976,58 +12976,57 @@ void main_system_loop(void) {
  8004c6e:	d01e      	beq.n	8004cae <main_system_loop+0x92>
  8004c70:	2b01      	cmp	r3, #1
  8004c72:	d115      	bne.n	8004ca0 <main_system_loop+0x84>
-	case SYS_STATE_IDLE:
+        case SYS_STATE_IDLE:
+            break;
 
-		break;
-	case SYS_STATE_RUNNING:
-		if (timer_logger_flag) {
+        case SYS_STATE_RUNNING:
+            if (timer_logger_flag) {
  8004c74:	4b13      	ldr	r3, [pc, #76]	@ (8004cc4 <main_system_loop+0xa8>)
  8004c76:	781b      	ldrb	r3, [r3, #0]
  8004c78:	b2db      	uxtb	r3, r3
  8004c7a:	2b00      	cmp	r3, #0
  8004c7c:	d019      	beq.n	8004cb2 <main_system_loop+0x96>
-			printf("adc_value : %u \r\n", adc_buf);
+                printf("adc_value : %u \r\n", adc_buf);
  8004c7e:	4b12      	ldr	r3, [pc, #72]	@ (8004cc8 <main_system_loop+0xac>)
  8004c80:	881b      	ldrh	r3, [r3, #0]
  8004c82:	4619      	mov	r1, r3
  8004c84:	4811      	ldr	r0, [pc, #68]	@ (8004ccc <main_system_loop+0xb0>)
  8004c86:	f000 f9b1 	bl	8004fec <iprintf>
-			timer_logger_flag = 0x00U;
+                timer_logger_flag = 0x00U;
  8004c8a:	4b0e      	ldr	r3, [pc, #56]	@ (8004cc4 <main_system_loop+0xa8>)
  8004c8c:	2200      	movs	r2, #0
  8004c8e:	701a      	strb	r2, [r3, #0]
-		}
-
-		break;
+            }
+            break;
  8004c90:	e00f      	b.n	8004cb2 <main_system_loop+0x96>
-	case SYS_STATE_ERROR:
-		printf("Error\r\n");
+
+        case SYS_STATE_ERROR:
+            printf("Error\r\n");
  8004c92:	480f      	ldr	r0, [pc, #60]	@ (8004cd0 <main_system_loop+0xb4>)
  8004c94:	f000 fa12 	bl	80050bc <puts>
-		system_state = SYS_STATE_IDLE;
+            system_state = SYS_STATE_IDLE;
  8004c98:	4b09      	ldr	r3, [pc, #36]	@ (8004cc0 <main_system_loop+0xa4>)
  8004c9a:	2200      	movs	r2, #0
  8004c9c:	701a      	strb	r2, [r3, #0]
-		break;
+            break;
  8004c9e:	e009      	b.n	8004cb4 <main_system_loop+0x98>
 
-	default:
-		printf("Unexpected system state\r\n");
+        default:
+            printf("Unexpected system state\r\n");
  8004ca0:	480c      	ldr	r0, [pc, #48]	@ (8004cd4 <main_system_loop+0xb8>)
  8004ca2:	f000 fa0b 	bl	80050bc <puts>
-		system_state = SYS_STATE_IDLE;
+            system_state = SYS_STATE_IDLE;
  8004ca6:	4b06      	ldr	r3, [pc, #24]	@ (8004cc0 <main_system_loop+0xa4>)
  8004ca8:	2200      	movs	r2, #0
  8004caa:	701a      	strb	r2, [r3, #0]
-		break;
+            break;
  8004cac:	e002      	b.n	8004cb4 <main_system_loop+0x98>
-		break;
+            break;
  8004cae:	bf00      	nop
  8004cb0:	e000      	b.n	8004cb4 <main_system_loop+0x98>
-		break;
+            break;
  8004cb2:	bf00      	nop
-	}
-
+    }
 }
  8004cb4:	bf00      	nop
  8004cb6:	bd80      	pop	{r7, pc}
@@ -13042,30 +13041,35 @@ void main_system_loop(void) {
 
 08004cd8 <adc_start_mesure>:
 
+/**
+ * @brief Start ADC measurement
+ */
 system_module_error_t adc_start_mesure(void) {
  8004cd8:	b580      	push	{r7, lr}
  8004cda:	af00      	add	r7, sp, #0
-	if (HAL_TIM_Base_Start_IT(&htim10) != HAL_OK){
+    if (HAL_TIM_Base_Start_IT(&htim10) != HAL_OK) {
  8004cdc:	480e      	ldr	r0, [pc, #56]	@ (8004d18 <adc_start_mesure+0x40>)
  8004cde:	f7fe fb1f 	bl	8003320 <HAL_TIM_Base_Start_IT>
  8004ce2:	4603      	mov	r3, r0
  8004ce4:	2b00      	cmp	r3, #0
  8004ce6:	d001      	beq.n	8004cec <adc_start_mesure+0x14>
-		return SYSTEM_ERROR_TIM10;
+        return SYSTEM_ERROR_TIM10;
  8004ce8:	2301      	movs	r3, #1
  8004cea:	e012      	b.n	8004d12 <adc_start_mesure+0x3a>
-	}
-	if (HAL_TIM_Base_Start_IT(&htim11) != HAL_OK){
+    }
+
+    if (HAL_TIM_Base_Start_IT(&htim11) != HAL_OK) {
  8004cec:	480b      	ldr	r0, [pc, #44]	@ (8004d1c <adc_start_mesure+0x44>)
  8004cee:	f7fe fb17 	bl	8003320 <HAL_TIM_Base_Start_IT>
  8004cf2:	4603      	mov	r3, r0
  8004cf4:	2b00      	cmp	r3, #0
  8004cf6:	d001      	beq.n	8004cfc <adc_start_mesure+0x24>
-		return SYSTEM_ERROR_TIM11;
+        return SYSTEM_ERROR_TIM11;
  8004cf8:	2302      	movs	r3, #2
  8004cfa:	e00a      	b.n	8004d12 <adc_start_mesure+0x3a>
-	}
-	if (HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&adc_buf, ADC_SIZE) != HAL_OK){
+    }
+
+    if (HAL_ADC_Start_DMA(&hadc1, (uint32_t *)&adc_buf, ADC_SIZE) != HAL_OK) {
  8004cfc:	2201      	movs	r2, #1
  8004cfe:	4908      	ldr	r1, [pc, #32]	@ (8004d20 <adc_start_mesure+0x48>)
  8004d00:	4808      	ldr	r0, [pc, #32]	@ (8004d24 <adc_start_mesure+0x4c>)
@@ -13073,11 +13077,12 @@ system_module_error_t adc_start_mesure(void) {
  8004d06:	4603      	mov	r3, r0
  8004d08:	2b00      	cmp	r3, #0
  8004d0a:	d001      	beq.n	8004d10 <adc_start_mesure+0x38>
-		return SYSTEM_ERROR_ADC;
+        return SYSTEM_ERROR_ADC;
  8004d0c:	2303      	movs	r3, #3
  8004d0e:	e000      	b.n	8004d12 <adc_start_mesure+0x3a>
-	}
-	return SYSTEM_OK;
+    }
+
+    return SYSTEM_OK;
  8004d10:	2300      	movs	r3, #0
 }
  8004d12:	4618      	mov	r0, r3
@@ -13090,40 +13095,46 @@ system_module_error_t adc_start_mesure(void) {
 
 08004d28 <adc_stop_mesure>:
 
+/**
+ * @brief Stop ADC measurement
+ */
 system_module_error_t adc_stop_mesure(void) {
  8004d28:	b580      	push	{r7, lr}
  8004d2a:	af00      	add	r7, sp, #0
-	if (HAL_TIM_Base_Stop_IT(&htim10) != HAL_OK){
+    if (HAL_TIM_Base_Stop_IT(&htim10) != HAL_OK) {
  8004d2c:	480d      	ldr	r0, [pc, #52]	@ (8004d64 <adc_stop_mesure+0x3c>)
  8004d2e:	f7fe fb59 	bl	80033e4 <HAL_TIM_Base_Stop_IT>
  8004d32:	4603      	mov	r3, r0
  8004d34:	2b00      	cmp	r3, #0
  8004d36:	d001      	beq.n	8004d3c <adc_stop_mesure+0x14>
-		return SYSTEM_ERROR_TIM10;
+        return SYSTEM_ERROR_TIM10;
  8004d38:	2301      	movs	r3, #1
  8004d3a:	e010      	b.n	8004d5e <adc_stop_mesure+0x36>
-	}
-	if (HAL_TIM_Base_Stop_IT(&htim11) != HAL_OK){
+    }
+
+    if (HAL_TIM_Base_Stop_IT(&htim11) != HAL_OK) {
  8004d3c:	480a      	ldr	r0, [pc, #40]	@ (8004d68 <adc_stop_mesure+0x40>)
  8004d3e:	f7fe fb51 	bl	80033e4 <HAL_TIM_Base_Stop_IT>
  8004d42:	4603      	mov	r3, r0
  8004d44:	2b00      	cmp	r3, #0
  8004d46:	d001      	beq.n	8004d4c <adc_stop_mesure+0x24>
-		return SYSTEM_ERROR_TIM11;
+        return SYSTEM_ERROR_TIM11;
  8004d48:	2302      	movs	r3, #2
  8004d4a:	e008      	b.n	8004d5e <adc_stop_mesure+0x36>
-	}
-	if (HAL_ADC_Stop_DMA(&hadc1) != HAL_OK){
+    }
+
+    if (HAL_ADC_Stop_DMA(&hadc1) != HAL_OK) {
  8004d4c:	4807      	ldr	r0, [pc, #28]	@ (8004d6c <adc_stop_mesure+0x44>)
  8004d4e:	f7fc fbef 	bl	8001530 <HAL_ADC_Stop_DMA>
  8004d52:	4603      	mov	r3, r0
  8004d54:	2b00      	cmp	r3, #0
  8004d56:	d001      	beq.n	8004d5c <adc_stop_mesure+0x34>
-		return SYSTEM_ERROR_ADC;
+        return SYSTEM_ERROR_ADC;
  8004d58:	2303      	movs	r3, #3
  8004d5a:	e000      	b.n	8004d5e <adc_stop_mesure+0x36>
-	}
-	return SYSTEM_OK;
+    }
+
+    return SYSTEM_OK;
  8004d5c:	2300      	movs	r3, #0
 }
  8004d5e:	4618      	mov	r0, r3
@@ -13135,33 +13146,36 @@ system_module_error_t adc_stop_mesure(void) {
 
 08004d70 <HAL_TIM_PeriodElapsedCallback>:
 
-
+/**
+ * @brief TIM Period Elapsed Callback
+ */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
  8004d70:	b580      	push	{r7, lr}
  8004d72:	b082      	sub	sp, #8
  8004d74:	af00      	add	r7, sp, #0
  8004d76:	6078      	str	r0, [r7, #4]
-	if (htim == &htim10) {
+    if (htim == &htim10) {
  8004d78:	687b      	ldr	r3, [r7, #4]
  8004d7a:	4a09      	ldr	r2, [pc, #36]	@ (8004da0 <HAL_TIM_PeriodElapsedCallback+0x30>)
  8004d7c:	4293      	cmp	r3, r2
  8004d7e:	d102      	bne.n	8004d86 <HAL_TIM_PeriodElapsedCallback+0x16>
-		timer_logger_flag = 0x01U;
+        timer_logger_flag = 0x01U;
  8004d80:	4b08      	ldr	r3, [pc, #32]	@ (8004da4 <HAL_TIM_PeriodElapsedCallback+0x34>)
  8004d82:	2201      	movs	r2, #1
  8004d84:	701a      	strb	r2, [r3, #0]
-	}
-	if (htim == &htim11) {
+    }
+
+    if (htim == &htim11) {
  8004d86:	687b      	ldr	r3, [r7, #4]
  8004d88:	4a07      	ldr	r2, [pc, #28]	@ (8004da8 <HAL_TIM_PeriodElapsedCallback+0x38>)
  8004d8a:	4293      	cmp	r3, r2
  8004d8c:	d104      	bne.n	8004d98 <HAL_TIM_PeriodElapsedCallback+0x28>
-		HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&adc_buf, ADC_SIZE);
+        HAL_ADC_Start_DMA(&hadc1, (uint32_t *)&adc_buf, ADC_SIZE);
  8004d8e:	2201      	movs	r2, #1
  8004d90:	4906      	ldr	r1, [pc, #24]	@ (8004dac <HAL_TIM_PeriodElapsedCallback+0x3c>)
  8004d92:	4807      	ldr	r0, [pc, #28]	@ (8004db0 <HAL_TIM_PeriodElapsedCallback+0x40>)
  8004d94:	f7fc fad8 	bl	8001348 <HAL_ADC_Start_DMA>
-	}
+    }
 }
  8004d98:	bf00      	nop
  8004d9a:	3708      	adds	r7, #8
@@ -13175,13 +13189,17 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 
 08004db4 <HAL_GPIO_EXTI_Callback>:
 
+/**
+ * @brief GPIO External Interrupt Callback
+ */
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
  8004db4:	b480      	push	{r7}
  8004db6:	b083      	sub	sp, #12
  8004db8:	af00      	add	r7, sp, #0
  8004dba:	4603      	mov	r3, r0
  8004dbc:	80fb      	strh	r3, [r7, #6]
-	user_btn_flag = 0x01U;
+    (void)GPIO_Pin;
+    user_btn_flag = 0x01U;
  8004dbe:	4b04      	ldr	r3, [pc, #16]	@ (8004dd0 <HAL_GPIO_EXTI_Callback+0x1c>)
  8004dc0:	2201      	movs	r2, #1
  8004dc2:	701a      	strb	r2, [r3, #0]
@@ -13195,7 +13213,9 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 
 08004dd4 <HAL_UARTEx_RxEventCallback>:
 
-
+/**
+ * @brief UART RX Event Callback (ReceiveToIdle)
+ */
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {
  8004dd4:	b580      	push	{r7, lr}
  8004dd6:	b082      	sub	sp, #8
@@ -13203,13 +13223,14 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {
  8004dda:	6078      	str	r0, [r7, #4]
  8004ddc:	460b      	mov	r3, r1
  8004dde:	807b      	strh	r3, [r7, #2]
+    (void)Size;
 
-	if (huart == &huart2) {
+    if (huart == &huart2) {
  8004de0:	687b      	ldr	r3, [r7, #4]
  8004de2:	4a1c      	ldr	r2, [pc, #112]	@ (8004e54 <HAL_UARTEx_RxEventCallback+0x80>)
  8004de4:	4293      	cmp	r3, r2
  8004de6:	d131      	bne.n	8004e4c <HAL_UARTEx_RxEventCallback+0x78>
-		if (strncmp((const char *)rx_buffer, (const char *)config.start_msg, START_MSG_SIZE) == 0) {
+        if (strncmp((const char *)rx_buffer, (const char *)config.start_msg, START_MSG_SIZE) == 0) {
  8004de8:	2205      	movs	r2, #5
  8004dea:	491b      	ldr	r1, [pc, #108]	@ (8004e58 <HAL_UARTEx_RxEventCallback+0x84>)
  8004dec:	481b      	ldr	r0, [pc, #108]	@ (8004e5c <HAL_UARTEx_RxEventCallback+0x88>)
@@ -13217,25 +13238,24 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {
  8004df2:	4603      	mov	r3, r0
  8004df4:	2b00      	cmp	r3, #0
  8004df6:	d10c      	bne.n	8004e12 <HAL_UARTEx_RxEventCallback+0x3e>
-			if (adc_start_mesure() != SYSTEM_OK) {
+            if (adc_start_mesure() != SYSTEM_OK) {
  8004df8:	f7ff ff6e 	bl	8004cd8 <adc_start_mesure>
  8004dfc:	4603      	mov	r3, r0
  8004dfe:	2b00      	cmp	r3, #0
  8004e00:	d003      	beq.n	8004e0a <HAL_UARTEx_RxEventCallback+0x36>
-				system_state = SYS_STATE_ERROR;
+                system_state = SYS_STATE_ERROR;
  8004e02:	4b17      	ldr	r3, [pc, #92]	@ (8004e60 <HAL_UARTEx_RxEventCallback+0x8c>)
  8004e04:	2202      	movs	r2, #2
  8004e06:	701a      	strb	r2, [r3, #0]
  8004e08:	e01b      	b.n	8004e42 <HAL_UARTEx_RxEventCallback+0x6e>
-			} else {
-				system_state = SYS_STATE_RUNNING;
+            } else {
+                system_state = SYS_STATE_RUNNING;
  8004e0a:	4b15      	ldr	r3, [pc, #84]	@ (8004e60 <HAL_UARTEx_RxEventCallback+0x8c>)
  8004e0c:	2201      	movs	r2, #1
  8004e0e:	701a      	strb	r2, [r3, #0]
  8004e10:	e017      	b.n	8004e42 <HAL_UARTEx_RxEventCallback+0x6e>
-			}
-
-		} else if (strncmp((const char *)rx_buffer, (const char *)config.stop_msg, STOP_MSG_SIZE) == 0) {
+            }
+        } else if (strncmp((const char *)rx_buffer, (const char *)config.stop_msg, STOP_MSG_SIZE) == 0) {
  8004e12:	2204      	movs	r2, #4
  8004e14:	4913      	ldr	r1, [pc, #76]	@ (8004e64 <HAL_UARTEx_RxEventCallback+0x90>)
  8004e16:	4811      	ldr	r0, [pc, #68]	@ (8004e5c <HAL_UARTEx_RxEventCallback+0x88>)
@@ -13243,39 +13263,37 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {
  8004e1c:	4603      	mov	r3, r0
  8004e1e:	2b00      	cmp	r3, #0
  8004e20:	d10c      	bne.n	8004e3c <HAL_UARTEx_RxEventCallback+0x68>
-			if (adc_stop_mesure() != SYSTEM_OK) {
+            if (adc_stop_mesure() != SYSTEM_OK) {
  8004e22:	f7ff ff81 	bl	8004d28 <adc_stop_mesure>
  8004e26:	4603      	mov	r3, r0
  8004e28:	2b00      	cmp	r3, #0
  8004e2a:	d003      	beq.n	8004e34 <HAL_UARTEx_RxEventCallback+0x60>
-				system_state = SYS_STATE_ERROR;
+                system_state = SYS_STATE_ERROR;
  8004e2c:	4b0c      	ldr	r3, [pc, #48]	@ (8004e60 <HAL_UARTEx_RxEventCallback+0x8c>)
  8004e2e:	2202      	movs	r2, #2
  8004e30:	701a      	strb	r2, [r3, #0]
  8004e32:	e006      	b.n	8004e42 <HAL_UARTEx_RxEventCallback+0x6e>
-			} else {
-				system_state = SYS_STATE_IDLE;
+            } else {
+                system_state = SYS_STATE_IDLE;
  8004e34:	4b0a      	ldr	r3, [pc, #40]	@ (8004e60 <HAL_UARTEx_RxEventCallback+0x8c>)
  8004e36:	2200      	movs	r2, #0
  8004e38:	701a      	strb	r2, [r3, #0]
  8004e3a:	e002      	b.n	8004e42 <HAL_UARTEx_RxEventCallback+0x6e>
-			}
-		} else {
-			system_state = SYS_STATE_ERROR;
+            }
+        } else {
+            system_state = SYS_STATE_ERROR;
  8004e3c:	4b08      	ldr	r3, [pc, #32]	@ (8004e60 <HAL_UARTEx_RxEventCallback+0x8c>)
  8004e3e:	2202      	movs	r2, #2
  8004e40:	701a      	strb	r2, [r3, #0]
+        }
 
-		}
-
-		HAL_UARTEx_ReceiveToIdle_DMA(huart, rx_buffer, RX_BUFF_SIZE);
+        HAL_UARTEx_ReceiveToIdle_DMA(huart, rx_buffer, RX_BUFF_SIZE);
  8004e42:	2220      	movs	r2, #32
  8004e44:	4905      	ldr	r1, [pc, #20]	@ (8004e5c <HAL_UARTEx_RxEventCallback+0x88>)
  8004e46:	6878      	ldr	r0, [r7, #4]
  8004e48:	f7fe fd89 	bl	800395e <HAL_UARTEx_ReceiveToIdle_DMA>
-		/* add memset ?*/
-	}
-
+        /* Consider adding: memset(rx_buffer, 0, RX_BUFF_SIZE); */
+    }
 }
  8004e4c:	bf00      	nop
  8004e4e:	3708      	adds	r7, #8

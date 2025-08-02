@@ -1,6 +1,6 @@
-../SW/Src/System.c:20:6:main_system_loop	8
-../SW/Src/System.c:60:23:adc_start_mesure	4
-../SW/Src/System.c:73:23:adc_stop_mesure	4
-../SW/Src/System.c:87:6:HAL_TIM_PeriodElapsedCallback	3
-../SW/Src/System.c:96:6:HAL_GPIO_EXTI_Callback	1
-../SW/Src/System.c:101:6:HAL_UARTEx_RxEventCallback	6
+../SW/Src/System.c:31:6:main_system_loop	8
+../SW/Src/System.c:73:23:adc_start_mesure	4
+../SW/Src/System.c:92:23:adc_stop_mesure	4
+../SW/Src/System.c:111:6:HAL_TIM_PeriodElapsedCallback	3
+../SW/Src/System.c:124:6:HAL_GPIO_EXTI_Callback	1
+../SW/Src/System.c:132:6:HAL_UARTEx_RxEventCallback	6
