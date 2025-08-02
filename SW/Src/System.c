@@ -18,6 +18,20 @@ module_config_t config = {
 };
 
 void main_system_loop(void) {
+	if (user_btn_flag) {
+		HAL_Delay(DEBOUNCE_TIME);
+		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+		if (system_state == SYS_STATE_RUNNING) {
+			adc_stop_mesure();
+			system_state = SYS_STATE_IDLE;
+		} else {
+			adc_start_mesure();
+			system_state = SYS_STATE_RUNNING;
+		}
+
+		user_btn_flag = 0x00U;
+	}
+
 
 	switch (system_state) {
 	case SYS_STATE_IDLE:
@@ -80,15 +94,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 }
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
-	HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
-	if (system_state == SYS_STATE_RUNNING) {
-		adc_stop_mesure();
-		system_state = SYS_STATE_IDLE;
-	} else {
-		adc_start_mesure();
-		system_state = SYS_STATE_RUNNING;
-	}
-
+	user_btn_flag = 0x01U;
 }
 
 

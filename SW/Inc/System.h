@@ -17,6 +17,7 @@
 #define ADC_SIZE 1
 #define START_MSG_SIZE 5
 #define STOP_MSG_SIZE 4
+#define DEBOUNCE_TIME 20
 
 extern TIM_HandleTypeDef htim10;
 extern ADC_HandleTypeDef hadc1;
