@@ -13292,7 +13292,7 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {
  8004e44:	4905      	ldr	r1, [pc, #20]	@ (8004e5c <HAL_UARTEx_RxEventCallback+0x88>)
  8004e46:	6878      	ldr	r0, [r7, #4]
  8004e48:	f7fe fd89 	bl	800395e <HAL_UARTEx_ReceiveToIdle_DMA>
-        /* Consider adding: memset(rx_buffer, 0, RX_BUFF_SIZE); */
+
     }
 }
  8004e4c:	bf00      	nop
