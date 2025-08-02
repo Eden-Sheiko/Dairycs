@@ -1,0 +1,7 @@
+../SW/Src/System.c:16:6:main_system_loop	6
+../SW/Src/System.c:53:23:adc_start_mesure	4
+../SW/Src/System.c:66:23:adc_stop_mesure	4
+../SW/Src/System.c:83:6:HAL_TIM_PeriodElapsedCallback	3
+../SW/Src/System.c:92:6:HAL_GPIO_EXTI_Callback	3
+../SW/Src/System.c:107:6:HAL_UARTEx_RxEventCallback	5
+../SW/Src/System.c:131:6:HAL_ADC_ConvCpltCallback	1
